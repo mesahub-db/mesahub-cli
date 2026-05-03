@@ -1,7 +1,8 @@
 name: Check
 
-# The CLI depends on @mesahub/client via workspace:* so we check out the
-# full mono workspace and run the build from there.
+# @mesahub/client is not yet published to npm.
+# We check out the public client repo, build it, then patch the CLI package.json
+# to use a local file: reference before building the CLI.
 
 on:
   push:
@@ -15,13 +16,16 @@ jobs:
     name: TypeScript Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout mesahub-mono
+      - name: Checkout CLI
         uses: actions/checkout@v4
         with:
-          repository: mesahub-db/mesahub-mono
-          token: ${{ secrets.GH_PAT }}
-          submodules: recursive
-          fetch-depth: 0
+          path: cli
+
+      - name: Checkout @mesahub/client (public)
+        uses: actions/checkout@v4
+        with:
+          repository: mesahub-db/mesahub-pkg-node
+          path: client
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -33,16 +37,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: packages/pnpm-lock.yaml
 
-      - name: Install dependencies
-        working-directory: packages
-        run: pnpm install --frozen-lockfile
+      - name: Build @mesahub/client
+        working-directory: client
+        run: pnpm install && pnpm build
+
+      - name: Patch CLI to use local client
+        working-directory: cli
+        run: |
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            p.dependencies['@mesahub/client'] = 'file:../client';
+            fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
+          "
+
+      - name: Install CLI
+        working-directory: cli
+        run: pnpm install
 
       - name: Build CLI
-        working-directory: packages
-        run: pnpm --filter @mesahub/cli build
+        working-directory: cli
+        run: pnpm build
 
       - name: Log success
         run: echo "✅ CLI build OK"
