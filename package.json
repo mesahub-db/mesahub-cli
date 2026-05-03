@@ -34,7 +34,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/0xdps/mesahub-package"
+    "url": "https://github.com/mesahub-db/mesahub-cli"
   },
   "publishConfig": {
     "access": "public"
