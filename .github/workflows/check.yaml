@@ -1,0 +1,48 @@
+name: Check
+
+# The CLI depends on @mesahub/client via workspace:* so we check out the
+# full mono workspace and run the build from there.
+
+on:
+  push:
+    branches:
+      - trunk
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: TypeScript Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mesahub-mono
+        uses: actions/checkout@v4
+        with:
+          repository: mesahub-db/mesahub-mono
+          token: ${{ secrets.GH_PAT }}
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: packages/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Build CLI
+        working-directory: packages
+        run: pnpm --filter @mesahub/cli build
+
+      - name: Log success
+        run: echo "✅ CLI build OK"

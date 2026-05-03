@@ -1,0 +1,48 @@
+{
+  "name": "@mesahub/cli",
+  "version": "0.2.1",
+  "private": false,
+  "type": "module",
+  "description": "CLI for mesahub — manage databases and API keys from the terminal",
+  "bin": {
+    "mesahub": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "prepublishOnly": "pnpm build",
+    "dev": "tsc --project tsconfig.json --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@mesahub/client": "^0.5.1",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xdps/mesahub-package"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "mesahub",
+    "cli",
+    "sqlite",
+    "database"
+  ]
+}
