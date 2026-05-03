@@ -1,6 +1,6 @@
 # @mesahub/cli
 
-Command-line tool for sqlite-hub. Manage your databases and API keys from the terminal.
+Command-line tool for mesahub. Manage your databases and API keys from the terminal.
 
 ## Installation
 
@@ -12,25 +12,59 @@ pnpm add -g @mesahub/cli
 
 ## Authentication
 
-Log in with your sqlite-hub account token (`shs_...`):
+### Method 1 — Connection string
+
+Pass a `mh://` URL directly to any command using `--url`:
 
 ```bash
-sqlite-hub auth login --token shs_your_token_here
+mesahub --url "mh://shs_your_api_key@your-core.railway.app/my-app-db" db query "SELECT * FROM users"
 ```
+
+Or export it as an environment variable — any command will pick it up automatically:
+
+```bash
+export MESAHUB_URL="mh://shs_your_api_key@your-core.railway.app/my-app-db"
+mesahub db query "SELECT * FROM users"
+```
+
+Connection string format: `mh://apikey@host[:port]/dbname`
+
+```
+# Hosted / remote  →  HTTPS
+mh://shs_abc123@my-core.railway.app/my-app-db
+
+# Local / Docker   →  HTTP (detected automatically from hostname)
+mh://shs_abc123@localhost:3000/my-app-db
+mh://shs_abc123@core-service/my-app-db
+```
+
+### Method 2 — Login (saved credentials)
+
+Log in once with your API key and control plane URL:
+
+```bash
+mesahub auth login --token shs_your_token_here
+```
+
+For a self-hosted instance, pass your control plane URL:
+
+```bash
+mesahub auth login --token shs_... --base-url https://control.mycompany.com
+```
+
+Credentials are saved to `~/.config/mesahub/config.json` (mode `0600`) and used for all subsequent commands.
 
 Check who you're logged in as:
 
 ```bash
-sqlite-hub auth whoami
+mesahub auth whoami
 ```
 
 Log out:
 
 ```bash
-sqlite-hub auth logout
+mesahub auth logout
 ```
-
-Credentials are stored in `~/.sqlite-hub/config.json` (mode `0600`).
 
 ## Commands
 
@@ -38,35 +72,25 @@ Credentials are stored in `~/.sqlite-hub/config.json` (mode `0600`).
 
 ```bash
 # List all databases
-sqlite-hub databases list
+mesahub databases list
 
 # Create a new database
-sqlite-hub databases create my-app-db
-sqlite-hub databases create my-app-db --display-name "My App DB" --description "Production database"
+mesahub databases create my-app-db
+mesahub databases create my-app-db --display-name "My App DB" --description "Production database"
 
 # Alias: db
-sqlite-hub db list
+mesahub db list
 ```
 
 ### API Keys
 
 ```bash
 # List all active API keys
-sqlite-hub keys list
+mesahub keys list
 
 # Create a new API key (token shown once — save it!)
-sqlite-hub keys create "my-app"
+mesahub keys create "my-app"
 
 # Revoke a key by ID
-sqlite-hub keys revoke <id>
+mesahub keys revoke <id>
 ```
-
-## Custom Control Plane URL
-
-If you're self-hosting, pass a custom base URL at login:
-
-```bash
-sqlite-hub auth login --token shs_... --base-url https://control.mycompany.com
-```
-
-The base URL is saved in `~/.sqlite-hub/config.json` and used for all subsequent commands.
