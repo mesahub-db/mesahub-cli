@@ -22,7 +22,7 @@ export function registerAuthCommands(program: Command): void {
 
   auth
     .command('login')
-    .description('Authenticate with your sqlite-hub account via browser')
+    .description('Authenticate with your MesaHub account via browser')
     .option('--base-url <url>', `Control plane URL (default: ${DEFAULT_BASE_URL})`)
     .action(async (opts: { baseUrl?: string }) => {
       const baseUrl = (opts.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, '')
@@ -63,7 +63,7 @@ export function registerAuthCommands(program: Command): void {
             const error          = url.searchParams.get('error')
 
             const html = (title: string, body: string) =>
-              `<!DOCTYPE html><html><head><title>${title} — sqlite-hub</title>` +
+              `<!DOCTYPE html><html><head><title>${title} — mesahub</title>` +
               `<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;` +
               `display:flex;align-items:center;justify-content:center;min-height:100vh;` +
               `background:#0a0a0a;color:#e5e5e5}` +
@@ -126,8 +126,8 @@ export function registerAuthCommands(program: Command): void {
         console.log()
         console.log(`✓ Logged in${identity}`)
         console.log()
-        console.log('  sqlite-hub auth whoami   — confirm your identity')
-        console.log('  sqlite-hub db list       — list your databases')
+        console.log('  mesahub auth whoami   — confirm your identity')
+        console.log('  mesahub db list       — list your databases')
         console.log()
       } catch (err) {
         console.error(`\nLogin failed: ${err instanceof Error ? err.message : String(err)}`)

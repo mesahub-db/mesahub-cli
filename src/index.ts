@@ -8,7 +8,7 @@ const program = new Command()
 
 program
   .name('mesahub')
-  .description('CLI for sqlite-hub — manage databases and API keys')
+  .description('CLI for MesaHub — manage databases and API keys')
   .version('0.2.0')
 
 registerAuthCommands(program)

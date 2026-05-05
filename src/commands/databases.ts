@@ -84,7 +84,7 @@ export function registerDatabaseCommands(program: Command): void {
     .action(async (ref: string | undefined, opts: { sql: string }) => {
       const input = ref ?? getActiveDb()
       if (!input) {
-        console.error('No database specified. Pass a <name-or-ref> or run: sqlite-hub db use <name>')
+        console.error('No database specified. Pass a <name-or-ref> or run: mesahub db use <name>')
         process.exit(1)
       }
       const config = getConfigOrExit()
@@ -115,7 +115,7 @@ export function registerDatabaseCommands(program: Command): void {
     .action(async (ref: string | undefined, opts: { sql: string }) => {
       const input = ref ?? getActiveDb()
       if (!input) {
-        console.error('No database specified. Pass a <name-or-ref> or run: sqlite-hub db use <name>')
+        console.error('No database specified. Pass a <name-or-ref> or run: mesahub db use <name>')
         process.exit(1)
       }
       const config = getConfigOrExit()

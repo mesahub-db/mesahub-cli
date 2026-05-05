@@ -2,7 +2,7 @@ import { homedir } from 'os'
 import { join } from 'path'
 import { readFileSync, writeFileSync, mkdirSync, existsSync, unlinkSync } from 'fs'
 
-// XDG Base Directory: $XDG_CONFIG_HOME/sqlite-hub, falling back to ~/.config/sqlite-hub
+// XDG Base Directory: $XDG_CONFIG_HOME/mesahub, falling back to ~/.config/mesahub
 const XDG_CONFIG_HOME = process.env.XDG_CONFIG_HOME ?? join(homedir(), '.config')
 const CONFIG_DIR  = join(XDG_CONFIG_HOME, 'mesahub')
 const CONFIG_FILE = join(CONFIG_DIR, 'config.json')
@@ -48,7 +48,7 @@ export function deleteConfig(): void {
 export function getConfigOrExit(): Config {
   const config = readConfig()
   if (!config?.token) {
-    console.error('Not authenticated. Run: sqlite-hub auth login')
+    console.error('Not authenticated. Run: mesahub auth login')
     process.exit(1)
   }
   return config
@@ -57,7 +57,7 @@ export function getConfigOrExit(): Config {
 export function setActiveDb(slug: string): void {
   const config = readConfig()
   if (!config) {
-    console.error('Not authenticated. Run: sqlite-hub auth login')
+    console.error('Not authenticated. Run: mesahub auth login')
     process.exit(1)
   }
   writeConfig({ ...config, activeDb: slug })

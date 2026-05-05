@@ -1,4 +1,4 @@
-# @mesahub/cli
+# MesaHub CLI
 
 Command-line tool for MesaHub. Manage your databases and API keys from the terminal.
 
