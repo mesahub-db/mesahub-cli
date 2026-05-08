@@ -1,0 +1,28 @@
+package.json
+  h_7a2f4c8f0473b8 47
+.github/workflows/check.yaml
+  h_7a2f4c8f0473b8 43
+.github/workflows/publish.yml
+  s_e243abbb0dc648::t_16c8eb5cb0e5bd 24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "258cd71e7444b4a60f2ab946c672734db3ad4b11",
+  "prompts": {},
+  "humans": {
+    "h_7a2f4c8f0473b8": {
+      "author": "Devendra Pratap Singh <dps.manit@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_e243abbb0dc648": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "ba58654a-ffff-4db9-a3f6-d71887776fd3",
+        "model": "unknown"
+      },
+      "human_author": "Devendra Pratap Singh <dps.manit@gmail.com>"
+    }
+  }
+}
