@@ -44,8 +44,5 @@
     "cli",
     "sqlite",
     "database"
-  ],
-  "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
-  }
+  ]
 }

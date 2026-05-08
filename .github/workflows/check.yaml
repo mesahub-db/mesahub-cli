@@ -38,13 +38,9 @@ jobs:
         with:
           node-version: 24
 
-      - name: Allow esbuild build scripts
-        working-directory: client
-        run: echo 'dangerouslyAllowAllBuilds=true' >> .npmrc
-
       - name: Build @mesahub/client
         working-directory: client
-        run: pnpm install && pnpm build
+        run: pnpm install --ignore-scripts && pnpm build
 
       - name: Patch CLI to use local client
         working-directory: cli
