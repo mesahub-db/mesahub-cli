@@ -38,6 +38,10 @@ jobs:
         with:
           node-version: 24
 
+      - name: Allow esbuild build scripts
+        working-directory: client
+        run: echo 'dangerouslyAllowAllBuilds=true' >> .npmrc
+
       - name: Build @mesahub/client
         working-directory: client
         run: pnpm install && pnpm build
