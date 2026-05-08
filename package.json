@@ -21,7 +21,7 @@
     "src"
   ],
   "dependencies": {
-    "@mesahub/client": "^0.5.1",
+    "@mesahub/client": "^1.0.0",
     "commander": "^12.1.0"
   },
   "devDependencies": {
