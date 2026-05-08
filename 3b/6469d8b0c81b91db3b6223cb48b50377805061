@@ -1,0 +1,14 @@
+.github/workflows/check.yaml
+  h_7a2f4c8f0473b8 33,39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "3b6469d8b0c81b91db3b6223cb48b50377805061",
+  "prompts": {},
+  "humans": {
+    "h_7a2f4c8f0473b8": {
+      "author": "Devendra Pratap Singh <dps.manit@gmail.com>"
+    }
+  }
+}
