@@ -60,6 +60,9 @@ export function registerAuthCommands(program: Command): void {
             const receivedState  = url.searchParams.get('state')
             const token          = url.searchParams.get('token')
             const apiUrl         = url.searchParams.get('api_url') ?? undefined
+            const plan           = url.searchParams.get('plan')         ?? undefined
+            const maxDbStr       = url.searchParams.get('max_databases')
+            const maxDatabases   = maxDbStr !== null ? parseInt(maxDbStr, 10) : undefined
             const error          = url.searchParams.get('error')
 
             const html = (title: string, body: string) =>
@@ -98,7 +101,7 @@ export function registerAuthCommands(program: Command): void {
               return
             }
 
-            writeConfig({ token, baseUrl, apiUrl })
+            writeConfig({ token, baseUrl, apiUrl, plan, maxDatabases })
             res.end(html('Logged in', '<p>Return to your terminal to continue.</p>'))
             clearTimeout(timer)
             server.closeAllConnections?.()

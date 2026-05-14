@@ -14,6 +14,10 @@ export interface Config {
   apiUrl?: string
   /** Slug/ref of the currently active database (used when no ref is passed to query/exec). */
   activeDb?: string
+  /** Resolved plan slug (e.g. "free", "pro") — written at login time. */
+  plan?: string
+  /** Max databases allowed on this plan (-1 = unlimited) — written at login time. */
+  maxDatabases?: number
 }
 
 const DEFAULT_BASE_URL = 'https://www.mesahub.app'

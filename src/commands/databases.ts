@@ -104,6 +104,18 @@ export function registerDatabaseCommands(program: Command): void {
     .action(async (name: string, opts: { description?: string }) => {
       const config = getConfigOrExit()
       try {
+        // Pre-flight: check plan database limit before hitting the API
+        if (typeof config.maxDatabases === 'number' && config.maxDatabases > 0) {
+          const databases = await fetchDatabases(config.token)
+          const active = databases.filter(d => d.status === 'active')
+          if (active.length >= config.maxDatabases) {
+            const planName = config.plan ?? 'current'
+            console.error(`Database limit reached: your ${planName} plan allows ${config.maxDatabases} database${config.maxDatabases === 1 ? '' : 's'}.`)
+            console.error('Upgrade at https://mesahub.app/pricing')
+            process.exit(1)
+          }
+        }
+
         const res = await apiFetch(config.token, '/api/user/databases', {
           method: 'POST',
           body: JSON.stringify({ name, description: opts.description }),
